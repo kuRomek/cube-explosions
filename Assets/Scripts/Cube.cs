@@ -3,12 +3,21 @@ using UnityEngine;
 
 public class Cube : MonoBehaviour
 {
+    private float _explosionForceCoeff;
+    private float _explosionRadiusCoeff;
+    private float _explosionCoeffsMultiplier;
     private float _splitChance;
     private float _splitChanceDivider;
     private float _cubeScaleDivider;
 
+    public float ExplosionForceCoeff => _explosionForceCoeff;
+    public float ExplosionRadiusCoeff => _explosionRadiusCoeff;
+
     private void Awake()
     {
+        _explosionForceCoeff = 1f;
+        _explosionRadiusCoeff = 1f;
+        _explosionCoeffsMultiplier = 1.5f;
         _splitChance = 1f;
         _splitChanceDivider = 2f;
         _cubeScaleDivider = 2f;
@@ -40,6 +49,7 @@ public class Cube : MonoBehaviour
                 Cube newCube = Instantiate(gameObject.GetComponent<Cube>(), newCubePosition, newCubeRotation);
                 newCube.transform.localScale /= _cubeScaleDivider;
                 newCube.SetSplitChance(_splitChance);
+                newCube.SetExplosionValues(_explosionForceCoeff, _explosionRadiusCoeff);
 
                 newCubes.Add(newCube);
             }
@@ -59,6 +69,12 @@ public class Cube : MonoBehaviour
         float randomZValue = Random.Range(minValue, maxValue);
         
         return new Vector3(randomXValue, randomYValue, randomZValue);
+    }
+
+    public void SetExplosionValues(float previousExplotionForceCoeff, float previousExplotionRadiusCoeff)
+    {
+        _explosionForceCoeff = previousExplotionForceCoeff * _explosionCoeffsMultiplier;
+        _explosionRadiusCoeff = previousExplotionRadiusCoeff * _explosionCoeffsMultiplier;
     }
 
     public void SetSplitChance(float previousSplitChance)

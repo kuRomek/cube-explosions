@@ -138,7 +138,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _camera: {fileID: 2880830636289000825}
-  _cubePrefab: {fileID: 7983815496219812252, guid: b49ab11a3c234824da0926068653e3c1, type: 3}
   _explosionEffect: {fileID: 8194992990867289339, guid: 99bc28c0d45f51c4fbac01080b73edc7, type: 3}
-  _explotionForce: 700
-  _explotionRadius: 10
+  _explosionForce: 300
+  _explosionRadius: 4

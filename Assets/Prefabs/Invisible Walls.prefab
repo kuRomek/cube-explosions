@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2505271161674213151}
   - component: {fileID: 3398239031255039151}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -63,7 +63,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8977598276443863246}
   - component: {fileID: 7073961299039499525}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -116,7 +116,7 @@ GameObject:
   m_Component:
   - component: {fileID: 726970326334561758}
   - component: {fileID: 5715168511957970972}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -169,7 +169,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3611142817335204759}
   - component: {fileID: 7028972807331498421}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Ceiling
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -222,7 +222,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3462768586496843842}
   - component: {fileID: 673391159419682466}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -274,7 +274,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8966682775148161216}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Invisible Walls
   m_TagString: Untagged
   m_Icon: {fileID: 0}
