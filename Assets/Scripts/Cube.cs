@@ -1,84 +1,51 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody))]
 public class Cube : MonoBehaviour
 {
-    private float _explosionForceCoeff;
-    private float _explosionRadiusCoeff;
-    private float _explosionCoeffsMultiplier;
-    private float _splitChance;
-    private float _splitChanceDivider;
-    private float _cubeScaleDivider;
-
-    public float ExplosionForceCoeff => _explosionForceCoeff;
-    public float ExplosionRadiusCoeff => _explosionRadiusCoeff;
+    private CubeSpawner _spawner;
+    public float ExplosionForceCoeff { get; private set; }
+    public float ExplosionRadiusCoeff { get; private set; }
+    public float SplitChance { get; private set; }
 
     private void Awake()
     {
-        _explosionForceCoeff = 1f;
-        _explosionRadiusCoeff = 1f;
-        _explosionCoeffsMultiplier = 1.5f;
-        _splitChance = 1f;
-        _splitChanceDivider = 2f;
-        _cubeScaleDivider = 2f;
+        if (TryGetComponent(out CubeSpawner spawner))
+            _spawner = spawner;
+
+        ExplosionForceCoeff = 1f;
+        ExplosionRadiusCoeff = 1f;
+        SplitChance = 1f;
         GetComponent<Renderer>().material.color = new Color(Random.value, Random.value, Random.value);
     }
 
     public List<Cube> Split()
     {
-        if (Random.value < _splitChance)
+        if (Random.value < SplitChance && _spawner != null)
         {    
             int minNewCubesCount = 2;
             int maxNewCubesCount = 6;
             int newCubesCount = Random.Range(minNewCubesCount, maxNewCubesCount + 1);
 
-            List<Cube> newCubes = new List<Cube>();
-
-            for (int i = 0; i < newCubesCount; i++)
-            {
-                float leftRandomOffset = -0.5f;
-                float rightRandomOffset = 0.5f;
-                float yAxisLift = 0.3f;
-                Vector3 randomOffset = GetRandomVector3(leftRandomOffset, rightRandomOffset);
-                Vector3 newCubePosition = transform.position + new Vector3(randomOffset.x, randomOffset.y + yAxisLift, randomOffset.z);
-
-                float minRandomAngle = -45f;
-                float maxRandomAngle = 45f;
-                Quaternion newCubeRotation = Quaternion.Euler(GetRandomVector3(minRandomAngle, maxRandomAngle));
-
-                Cube newCube = Instantiate(gameObject.GetComponent<Cube>(), newCubePosition, newCubeRotation);
-                newCube.transform.localScale /= _cubeScaleDivider;
-                newCube.SetSplitChance(_splitChance);
-                newCube.SetExplosionValues(_explosionForceCoeff, _explosionRadiusCoeff);
-
-                newCubes.Add(newCube);
-            }
+            List<Cube> newCubes = _spawner.Spawn(newCubesCount);
 
             return newCubes;
         }
         else
         {
-            return new List<Cube>();
+            return null;
         }
     }
 
-    private Vector3 GetRandomVector3(float minValue, float maxValue)
+    public void SetExplosionValues(float previousExplotionForceCoeff, float previousExplotionRadiusCoeff, float explosionCoeffsMultiplier)
     {
-        float randomXValue = Random.Range(minValue, maxValue);
-        float randomYValue = Random.Range(minValue, maxValue);
-        float randomZValue = Random.Range(minValue, maxValue);
-        
-        return new Vector3(randomXValue, randomYValue, randomZValue);
+        ExplosionForceCoeff = previousExplotionForceCoeff * explosionCoeffsMultiplier;
+        ExplosionRadiusCoeff = previousExplotionRadiusCoeff * explosionCoeffsMultiplier;
     }
 
-    public void SetExplosionValues(float previousExplotionForceCoeff, float previousExplotionRadiusCoeff)
+    public void SetSplitChance(float previousSplitChance, float splitChanceDivider)
     {
-        _explosionForceCoeff = previousExplotionForceCoeff * _explosionCoeffsMultiplier;
-        _explosionRadiusCoeff = previousExplotionRadiusCoeff * _explosionCoeffsMultiplier;
-    }
-
-    public void SetSplitChance(float previousSplitChance)
-    {
-        _splitChance = previousSplitChance / _splitChanceDivider;
+        SplitChance = previousSplitChance / splitChanceDivider;
     }
 }

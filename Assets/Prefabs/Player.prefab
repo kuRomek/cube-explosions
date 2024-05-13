@@ -102,6 +102,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8038982379155398262}
   - component: {fileID: 4194120909343079726}
+  - component: {fileID: 1817801943654776751}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -137,7 +138,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbb5e0a5150fcc047a26a08f06b6d378, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _camera: {fileID: 2880830636289000825}
-  _explosionEffect: {fileID: 8194992990867289339, guid: 99bc28c0d45f51c4fbac01080b73edc7, type: 3}
+  _explosionEffect: {fileID: 8194992990867289333, guid: 99bc28c0d45f51c4fbac01080b73edc7, type: 3}
   _explosionForce: 300
   _explosionRadius: 4
+--- !u!114 &1817801943654776751
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6471810263505286155}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1968345fa6ad4fd4db402398e6c57f2f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _camera: {fileID: 2880830636289000825}
