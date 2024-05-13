@@ -1,3 +1,3 @@
-# Cube Explosions
+# Cube Explosions v2.0
 
-https://youtu.be/rVal6oEDqJA
+https://youtu.be/6SgfxzAhJvc
