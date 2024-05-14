@@ -38,14 +38,11 @@ public class Cube : MonoBehaviour
         }
     }
 
-    public void SetExplosionValues(float previousExplotionForceCoeff, float previousExplotionRadiusCoeff, float explosionCoeffsMultiplier)
+    public void Init(float previousSplitChance, float splitChanceDivider, float previousExplotionForceCoeff, float previousExplotionRadiusCoeff, float explosionCoeffsMultiplier)
     {
         ExplosionForceCoeff = previousExplotionForceCoeff * explosionCoeffsMultiplier;
         ExplosionRadiusCoeff = previousExplotionRadiusCoeff * explosionCoeffsMultiplier;
-    }
 
-    public void SetSplitChance(float previousSplitChance, float splitChanceDivider)
-    {
         SplitChance = previousSplitChance / splitChanceDivider;
     }
 }

@@ -33,10 +33,9 @@ public class CubeSpawner : MonoBehaviour
             float maxRandomAngle = 45f;
             Quaternion newCubeRotation = Quaternion.Euler(GetRandomVector3(minRandomAngle, maxRandomAngle));
 
-            Cube newCube = Instantiate(GetComponent<Cube>(), newCubePosition, newCubeRotation);
+            Cube newCube = Instantiate(_parentCube, newCubePosition, newCubeRotation);
             newCube.transform.localScale /= _cubeScaleDivider;
-            newCube.SetExplosionValues(_parentCube.ExplosionForceCoeff, _parentCube.ExplosionRadiusCoeff, _explosionCoeffsMultiplier);
-            newCube.SetSplitChance(_parentCube.SplitChance, _splitChanceDivider);
+            newCube.Init(_parentCube.SplitChance, _splitChanceDivider, _parentCube.ExplosionForceCoeff, _parentCube.ExplosionRadiusCoeff, _explosionCoeffsMultiplier);
 
             newCubes.Add(newCube);
         }
