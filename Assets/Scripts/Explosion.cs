@@ -7,30 +7,33 @@ public class Explosion : MonoBehaviour
     [SerializeField] private float _explosionForce;
     [SerializeField] private float _explosionRadius;
 
-    public void BlowCube(Cube cube)
+    public void Blow(Cube blownCube, List<Cube> hitCubes)
     {
-        List<Cube> newCubes = cube.Split();
+        foreach (Cube newCube in hitCubes)
+            if (newCube.TryGetComponent(out Rigidbody rigidbody))
+                rigidbody.AddExplosionForce(_explosionForce, blownCube.transform.position, _explosionRadius);
 
-        if (newCubes == null)
-        {
-            float newExplosionForce = _explosionForce * cube.ExplosionForceCoeff;
-            float newExplosionRadius = _explosionRadius * cube.ExplosionRadiusCoeff;
+        Instantiate(_explosionEffect, blownCube.transform.position, Quaternion.identity);
 
-            Collider[] hitsBySphere = Physics.OverlapSphere(cube.transform.position, newExplosionRadius);
+        Destroy(blownCube.gameObject);
+    }
 
-            foreach (Collider hitBySphere in hitsBySphere)
-                if (hitBySphere.TryGetComponent(out Cube hitCube))
-                    hitCube.GetComponent<Rigidbody>().AddExplosionForce(newExplosionForce, cube.transform.position, newExplosionRadius);
-        }
-        else
-        {
-            foreach (Cube newCube in newCubes)
-                if (newCube.TryGetComponent(out Rigidbody rigidbody))
-                    rigidbody.AddExplosionForce(_explosionForce, cube.transform.position, _explosionRadius);
-        }
+    public void Blow(Cube blownCube)
+    {
+        _explosionForce *= blownCube.ExplosionForceCoeff;
+        _explosionRadius *= blownCube.ExplosionRadiusCoeff;
 
-        Instantiate(_explosionEffect, cube.transform.position, Quaternion.identity);
+        Collider[] hits = Physics.OverlapSphere(blownCube.transform.position, _explosionRadius);
 
-        Destroy(cube.gameObject);
+        List<Cube> hitCubes = new List<Cube>();
+
+        foreach (Collider hit in hits)
+            if (hit.TryGetComponent(out Cube hitCube))
+                hitCubes.Add(hitCube);
+
+        Blow(blownCube, hitCubes);
+
+        _explosionForce /= blownCube.ExplosionForceCoeff;
+        _explosionRadius /= blownCube.ExplosionRadiusCoeff;
     }
 }
